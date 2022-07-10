@@ -7,25 +7,27 @@ from cryptoDaily import crytoDailyInfo
 
 cryptoDaily = crytoDailyInfo()
 
+for item in cryptoDaily.items():
+    print(item[0])
+    print(item[1])
+
+
 conn = mysql.connector.connect(host='127.0.0.1',
                                         user='root',
                                         password='password',
-                                        db='dentalce',
+                                        db='content_agregator',
                                         charset='utf8')
 
 
 cursor = conn.cursor()
 
-sqlInsert = """ INSERT INTO links (name, link)
-                            VALUES (%(name_IN)s, %(link_IN)s); """
-
-item_Dict = {}
 for item in cryptoDaily.items():
-    if ''.join(item).strip():
-        item_Dict['name_IN'] = item[0]
-        item_Dict['link_in'] = item[1]
-        cursor.execute(sqlInsert, item_Dict)
+    sql = "INSERT INTO links (name, link) VALUES (%s, %s)"
+    #val = ("John", "Highway 21")
+    cursor.execute(sql, item)
+
+    #cursor.execute(f"INSERT INTO links (name, link) VALUES (({item[0]}, {item[1]})")
 
     conn.commit()
-    cursor.close()
-    conn.close()
+cursor.close()
+conn.close()

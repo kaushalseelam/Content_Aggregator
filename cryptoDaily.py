@@ -25,4 +25,4 @@ def crytoDailyInfo():
     
     return d
 
-crytoDailyInfo()
+#print(crytoDailyInfo())
